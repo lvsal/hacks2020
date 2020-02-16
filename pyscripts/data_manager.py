@@ -62,7 +62,7 @@ def update_query(query_name, args=[], multiple=False):
     query = quer.updater[query_name]
     if multiple == False:
         cursor = prepared_cursor()
-        cursor.execute(query,args)
+        cursor.execute(query, tuple(args))
         return database_commit()
     else:
         for i in range(len(args)):
