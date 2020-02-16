@@ -1,96 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Media</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>CampusLive</title>
 
-    <style>
-    row {
-      background-color: black;
-      color: white;
-    }
-    </style>
 
-    <style>#mapid { height: 500px; }</style>
-    <!-- leaflet CSS-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  <!-- leaflet CSS-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-    crossorigin=""/>
+    crossorigin="" />
 
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
 
-    <!-- Bootstrap core CSS -->
-     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <!-- Bootstrap core CSS -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    </head>
+  <style>
+    /* row {
+      background-color: black;
+      color: white;
+    } */
 
-  <body id="Projects">
-    <div id="mapid"></div>
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="studentFacilities">
-          <label class="form-check-label" for="studentFacilities">Student facilities</label>
-      <input type="checkbox" class="form-check-input" id="stores">
-        <label class="form-check-label" for="stores">Stores</label>
-      <input type="checkbox" class="form-check-input" id="personalFacilities">
-        <label class="form-check-label" for="personalFacilities">Personal facilities</label>
-      <input type="checkbox" class="form-check-input" id="uniFacilities">
-        <label class="form-check-label" for="uniFacilities">University facilities</label>
+
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+    *,
+    *:before,
+    *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #105469;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    table {
+      background: #012B39;
+      border-radius: 0.25em;
+      border-collapse: collapse;
+      margin: 1em;
+    }
+
+    th {
+      border-bottom: 1px solid #364043;
+      color: #E2B842;
+      font-size: 0.85em;
+      font-weight: 600;
+      padding: 0.5em 1em;
+      text-align: left;
+    }
+
+    td {
+      color: #fff;
+      font-weight: 400;
+      padding: 0.65em 1em;
+    }
+
+    .disabled td {
+      color: #4F5F64;
+    }
+
+    tbody tr {
+      transition: background 0.25s ease;
+    }
+
+    tbody tr:hover {
+      background: #014055;
+    }
+
+    button {
+      /* color: black;  */
+      background-color: #121212;  
+      padding: 0px 5px 0px 5px; 
+      border: black; 
+      background: transparent; 
+    }
+
+
+
+    button:hover{
+      background-color: black; 
+    }
+
+    label{
+      color: white; 
+    }
+
+    /* .moveLeft{
+      margin-left: 100px; 
+    } */
+  </style>
+
+  <style>
+    #mapid {
+      height: 500px;
+    }
+  </style>
+
+</head>
+
+<body id="Projects">
+  <div id="mapid"></div>
+  <div class="form-check" style="margin-left: 9px;">
+    <input type="checkbox" class="form-check-input" id="studentFacilities">
+    <label class="form-check-label" for="studentFacilities">Student facilities</label>
+    <input type="checkbox" class="form-check-input" id="stores">
+    <label class="form-check-label" for="stores">Stores</label>
+    <input type="checkbox" class="form-check-input" id="personalFacilities">
+    <label class="form-check-label" for="personalFacilities">Personal facilities</label>
+    <input type="checkbox" class="form-check-input" id="uniFacilities">
+    <label class="form-check-label" for="uniFacilities">University facilities</label>
+  </div>
+  <!-- <button onclick="cleartable()">clear me</button> -->
+
+
+  <div class="row">
+    <div class="col-xs-6">
+      <table class="table table-dark" id="comments_table">
+        <thead>
+          <tr>
+            <th>Upvote</th>
+            <th># of Upvotes</th>
+            <th>Comment</th>
+            <th>Poster</th>
+            <th>Go to</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
     </div>
-       <!-- <button onclick="cleartable()">clear me</button> -->
+    <div class="col-xs-6">
+      <table class="table table-dark" id="main_event_table">
+        <thead>
+          <tr>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Start time</th>
+            <th>End Time</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
-             <div class="row">
-          <div class="col-xs-6">
-            <table class="table table-dark" id="comments_table">
-              <thead>
-                <tr>
-                  <th>Event</th>
-                  <th>Upvotes</th>
-                  <th>Date</th>
-                  <th>Description</th>
-                  <th>Register</th>
-                </tr>
-              </thead>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
-          <div class="col-xs-6">
-            <table class="table table-dark" id="main_event_table">
-              <thead>
-                <tr>
-                  <th>Event name</th>
-                  <th>date</th>
-                  <th>starttime</th>
-                  <th>endtime</th>
-                  <th>location</th>
-                </tr>
-              </thead>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
-      </div>
-
-
-  </body>
+</body>
 
 <script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename = 'random.js') }}"></script>

@@ -207,6 +207,8 @@ function clearComments(){
   });
 }
 
+
+
 function drawComment(allComments){
   allComments.comments.forEach(function (commentItem){
 
@@ -317,6 +319,9 @@ function onMapClick(e) {
 
     }
     map.closePopup();
+    setTimeout(window.location.reload(),2000);
+    
+
 
   });
 

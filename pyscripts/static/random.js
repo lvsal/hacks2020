@@ -103,7 +103,9 @@ function parseThrough_Comments(obj){
 
       // Add some text to the new cells:
       var button = document.createElement("button");
-      button.innerHTML = "Upvote";
+      button.innerHTML = "&#128077;";
+      // button.className = "coolbutton";
+
 
       // 3. Add event handler
       button.addEventListener ("click", function() {
@@ -115,14 +117,14 @@ function parseThrough_Comments(obj){
             javascript_data: JSON.stringify(userinfo)
         });
 
-        sleep(1000).then(() => {
+        sleep(1500).then(() => {
             sleep(500).then(() => {
-                console.log(succ);
-                console.log(err);
+              window.location.reload();
+              //button.parentNode.removeC
             });
         });
-
-        button.parentNode.removeChild(button);
+        //setTimeout(window.location.reload(),2000);
+        //button.parentNode.removeChild(button);
 
       });
 
@@ -134,6 +136,7 @@ function parseThrough_Comments(obj){
 
       var button_location = document.createElement("button");
       button_location.innerHTML = "Location";
+      // button_location.className = "cool2";
 
       // 3. Add event handler
       button_location.addEventListener ("click", function() {
@@ -190,7 +193,7 @@ window.onload = function(){
     codeAddress();
 
 
-    sleep(2000).then(() => {
+    sleep(2500).then(() => {
       codeAddress_2();
     });
 }
