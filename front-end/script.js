@@ -1,6 +1,6 @@
 var map = L.map('mapid', {
   crs: L.CRS.Simple,
-  minZoom: -.5,
+  minZoom: 0,
   maxZoom: 3
 });
 
@@ -51,9 +51,13 @@ var polygon = L.rectangle(
 
 //
 class mapArea {
-  constructor(name, identifier, cornerTL, cornerTR, cornerBL, cornerBR){
+  constructor(name, identifier, building, floor, room, cornerTL, cornerTR,
+              cornerBL, cornerBR){
     this.name = name;
     this.identifier = identifier;
+    this.building = building;
+    this.floor = floor;
+    this.room = room;
     this.cornerTL = cornerTL;
     this.cornerTR = cornerTR;
     this.cornerBL = cornerBL;
@@ -62,9 +66,11 @@ class mapArea {
 };
 
 class mapFacility extends mapArea {
-  constructor(name, identifier, cornerTL, cornerTR, cornerBL, cornerBR,
-              hours, description){
-    super(name, identifier, cornerTL, cornerTR, cornerBL, cornerBR);
+  constructor(name, identifier, building, floor, room, cornerTL, cornerTR,
+    cornerBL, cornerBR, hours, description){
+
+    super(name, identifier, building, floor, room, cornerTL, cornerTR,
+      cornerBL, cornerBR);
     this.hours = hours;
     this.description = description;
   }
@@ -80,7 +86,9 @@ class allFacilities {
   }
 
   // create an mapFacility obj and pushes it into the corresponding array
-  addStudentFacility() {
+  addFacility(name, identifier, building, floor, room, cornerTL, cornerTR,
+    cornerBL, cornerBR, hours, description) {
 
+      if (identifier === "[]" )
   }
 }
