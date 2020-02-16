@@ -2,6 +2,11 @@ from flask import Flask, jsonify, request, render_template, make_response
 app = Flask(__name__)
 import json
 import data_manager as dm
+import Login_Create as login
+
+logged_in = ""
+err = ""
+
 
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
@@ -15,16 +20,47 @@ def hello():
         print(request.get_json())  # parse as JSON
         return data, 200
 
-    # GET request
+
+@app.route('/login_success', methods=['POST'])
+def login_success():
+    # lol = json.(data)
+    # dumps
+    global err
+    if request.method == 'POST':
+        print(err)
+        return err, 200
+
+
+
+@app.route('/postmethod', methods = ['POST'])
+def get_post_javascript_data():
+    global logged_in
+    global err
+    jsdata = request.form['javascript_data']
+    js = json.loads(jsdata)
+    print(request.get_json())
+    details = get_login(js)
+    err = details[1]
+    if(details[0] == 1):
+        logged_in = js["user"]
+        return logged_in
     else:
-        message = {'greeting':'Hello from Flask!'}
-        return jsonify(message)  # serialize and use JSON headers
+        logged_in = ""
+        return logged_in
+
+
+def get_login(js):
+    username = js["user"]
+    login.Login(js["user"], js["pass"])
+    hey = login.get_success()
+    return hey
 
 
 @app.route('/')
 def index():
     # look inside `templates` and serve `index.html`
     return render_template('index.html')
+
 
 
 

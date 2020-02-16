@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
 <body>
     jfbefb
 </body>
@@ -7,18 +10,64 @@
 
 <script>
 
+    let n = {
+        user: "shankar",
+        pass: "1234567891"
+    };
+
+    let succ = false;
+    let err = "";
+
     fetch('/hello',{
         // Specify the method
-        method: 'POST',
-        // A JSON payload
-        body: JSON.stringify({
-            "greeting": "Hello from the browser!"
-        })
+        method: 'POST'
     }).then(function (response) {
         return response.json();
     }).then(function (text) {
         console.log('POST response: ' + text);
+        {#n = text;#}
+        console.log(JSON.stringify(n))
         // Should be 'OK' if everything was successful
     });
+
+    function firstFunction(_callback){
+        // do some asynchronous work
+        // and when the asynchronous stuff is complete
+        $.post( "/postmethod", {
+
+            javascript_data: JSON.stringify(n)
+        });
+    }
+
+    function info(){
+        fetch('/login_success',{
+            // Specify the method
+            method: 'POST'
+        }).then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            if (text === ""){
+                succ = true;
+            }else{
+                err = text;
+            }
+        });
+    }
+
+
+
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    };
+
+    firstFunction();
+    sleep(1000).then(() => {
+      info();
+      sleep(500).then(() => {
+          console.log(succ);
+          console.log(err);
+      });
+    });
+
 
 </script>

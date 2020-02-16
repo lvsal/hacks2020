@@ -4,10 +4,18 @@ import time
 import datetime
 import hashlib
 
+success = 0
+err = ""
+
+def get_success():
+    return (success, err)
+
 
 class Create_User:
 
     def __init__(self, email_add, password, username):
+        global err
+        global success
         connection = mysql.connector.connect(host='remotemysql.com',
                                              database='vym2d4siQ9',
                                              user='vym2d4siQ9',
@@ -29,12 +37,15 @@ class Create_User:
                 connection.commit()
             except mysql.connector.Error as error:
                 print("parameterized query failed {}".format(error))
+                err = "Account already exists"
             finally:
                 if connection.is_connected():
                     ps_con.close()
                     connection.close()
+                    if err == "":
+                        success = 1
         else:
-            print("Invalid address")
+            err = "Invalid Address"
 
 
     def check_add(self, address):
@@ -44,15 +55,15 @@ class Create_User:
 
 class Login:
 
-
     def __init__(self, user, password):
+        global err
+        global success
         connection = mysql.connector.connect(host='remotemysql.com',
                                              database='vym2d4siQ9',
                                              user='vym2d4siQ9',
                                              password='o85cLdQ8HE')
 
         ps_con = connection.cursor(buffered = True)
-
         hash = hashlib.sha256()
         hash.update(bytearray(password, 'utf-8'))
         pass_h = hash.hexdigest()
@@ -62,34 +73,19 @@ class Login:
             ps_con.execute(query, to_ask)
             connection.commit()
             data_hash = ps_con.fetchall()
-            if (pass_h != data_hash[0][0]):
-                print("invalid password")
+            if len(data_hash) == 0:
+                err = "Account does not exist"
+            elif (pass_h != data_hash[0][0]):
+                err = "Incorrect password"
         except mysql.connector.Error as error:
             print("parameterized query failed {}".format(error))
+            err = "Could not login. Try again"
         finally:
             if connection.is_connected():
                 ps_con.close()
                 connection.close()
+                if err == "":
+                    success = 1
 
 
-if __name__ == "__main__":
-    connection = mysql.connector.connect(host='remotemysql.com',
-                                         database='vym2d4siQ9',
-                                         user='vym2d4siQ9',
-                                         password='o85cLdQ8HE')
 
-    ps_con = connection.cursor(buffered=True)
-    # sys = Login("shankar", "123456789")
-    t = "events"
-    query = """SELECT * FROM `%s`""" % (t)
-    try:
-        ps_con.execute(query)
-        connection.commit()
-        data_hash = ps_con.fetchall()
-        print(data_hash)
-    except mysql.connector.Error as error:
-        print("parameterized query failed {}".format(error))
-    finally:
-        if connection.is_connected():
-            ps_con.close()
-            connection.close()
