@@ -113,9 +113,13 @@ let test = new allFacilities();
 // draw each color one at a time/determining what color needs to be drawn
 function drawMap(facilities){
   facilities.stores.forEach(function (arrayItem) {
-    let hey = arrayItem.cornerTL;
-    console.log(arrayItem.cornerTL);
-    L.marker(L.latLng(hey)).addTo(map).bindPopup("hello");
+    // let hey = arrayItem.cornerTL;
+    // console.log(arrayItem.cornerTL);
+    // L.marker(L.latLng(hey)).addTo(map).bindPopup("hello");
+    L.polygon(
+      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+      {color: 'blue'}
+    ).addTo(map).bindTooltip(arrayItem.description);
   });
 }
 
