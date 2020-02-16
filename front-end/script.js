@@ -22,13 +22,7 @@ map.setView( [350, 545], 0);
 // Classes
 // location types
 class mapArea {
-  constructor(name, identifier, building, floor, room, cornerTL, cornerTR,
-              cornerBL, cornerBR){
-    this.name = name;
-    this.identifier = identifier;
-    this.building = building;
-    this.floor = floor;
-    this.room = room;
+  constructor(cornerTL, cornerTR, cornerBL, cornerBR){
     this.cornerTL = cornerTL;
     this.cornerTR = cornerTR;
     this.cornerBL = cornerBL;
@@ -40,9 +34,27 @@ class mapFacility extends mapArea {
   constructor(name, identifier, building, floor, room, cornerTL, cornerTR,
     cornerBL, cornerBR, hours, description){
 
-    super(name, identifier, building, floor, room, cornerTL, cornerTR,
-      cornerBL, cornerBR);
+    super(cornerTL, cornerTR, cornerBL, cornerBR);
+    this.name = name;
+    this.identifier = identifier;
+    this.building = building;
+    this.floor = floor;
+    this.room = room;
     this.hours = hours;
+    this.description = description;
+  }
+};
+
+class mapEvent extends mapArea {
+  constructor(title, date, start, end, location, description, cornerTL, cornerTR,
+    cornerBL, cornerBR){
+
+    super(cornerTL, cornerTR, cornerBL, cornerBR);
+    this.title = title;
+    this.date = date;
+    this.start = start;
+    this.end = end;
+    this.location = location;
     this.description = description;
   }
 };
@@ -54,7 +66,7 @@ class allFacilities {
     this.stores = [];
     this.selfFacilities = [];
     this.uniFacilities = [];
-    // this.events = [];
+    this.events = [];
 
   }
 
@@ -77,18 +89,57 @@ class allFacilities {
         this.uniFacilities.push(newFacility);
       }
   }
+
+  addEvent(title, date, start, end, location, description, cornerTL, cornerTR,
+    cornerBL, cornerBR) {
+
+      let newEvent = new mapEvent(title, date, start, end, location, description, cornerTL, cornerTR,
+        cornerBL, cornerBR);
+      this.events.push(newEvent);
+  }
 }
 
 // Map Functions
 // draw each color one at a time/determining what color needs to be drawn
 function drawMap(facilities){
+  // Student facilities
+  facilities.studentFacilities.forEach(function (arrayItem) {
+    L.polygon(
+      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+      {color: 'green'}
+    ).addTo(map).bindTooltip(arrayItem.description,
+      {direction:"center"}
+    ).bindPopup(arrayItem.description);
+  });
+
+  // Stores
   facilities.stores.forEach(function (arrayItem) {
     L.polygon(
       [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
       {color: 'blue'}
-    ).addTo(map).bindTooltip(arrayItem.description,
+    ).addTo(map).bindTooltip(arrayItem.name,
       {direction:"center"}
-    );
+    ).bindPopup(arrayItem.description);
+  });
+
+  // Self facilities
+  facilities.selfFacilities.forEach(function (arrayItem) {
+    L.polygon(
+      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+      {color: 'red'}
+    ).addTo(map).bindTooltip(arrayItem.name,
+      {direction:"center"}
+    ).bindPopup(arrayItem.description);
+  });
+
+  // Uni facilities
+  facilities.uniFacilities.forEach(function (arrayItem) {
+    L.polygon(
+      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+      {color: 'orange'}
+    ).addTo(map).bindTooltip(arrayItem.name,
+      {direction:"center"}
+    ).bindPopup(arrayItem.description);
   });
 }
 
@@ -98,9 +149,9 @@ let = showFacility = [0, 0, 0, 0, 0];
 
 let test = new allFacilities();
 
-test.addFacility("Bake chef","stores", "Mac", "6166", "267", [450,682],	[450,742],	[424,682]	,[424,742], "9:00 am - 5:00 pm",	"Bake chef: viet sub");
-test.addFacility("coffee shop",	"stores",	"msc",	"2","296",	[450,753], [449,792],	[423,754],	[423,792],	"9:00 am - 5:30 pm",	"coffee house: coffee shop");
-test.addFacility("pharmacy", "stores", "msc", "2", "291", [564,602], [566,673], [498,602],	[498,673], "8:30 am - 6:00 am", "pharcmy for all your pharmacy needs");
+test.addFacility("Bake chef","stores", "Mac", "6166", "267", [450,682],	[450,742],	[424,682]	,[424,742], "9:00 am - 5:00 pm",	"viet sub");
+test.addFacility("coffee shop",	"uniFacilities",	"msc",	"2","296",	[450,753], [449,792],	[423,754],	[423,792],	"9:00 am - 5:30 pm",	"coffee shop");
+test.addFacility("pharmacy", "selfFacilities", "msc", "2", "291", [564,602], [566,673], [498,602],	[498,673], "8:30 am - 6:00 am", "pharcmy for all your pharmacy needs");
 test.addFacility("stor", "stores", "msc", "2", "278", [524,395],	[524,463],	[442,395], [442,463],	"7:00 am - 11:00 pm",	"the stor has a lot of stuff");
 test.addFacility("lse", "studentFacilities", "msc", "2", "293", [642,635],	[642,823], [574,627],	[574,826], "10:00 am - 5:00 pm", "the leadership and student engagement office");
 
