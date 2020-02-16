@@ -4,6 +4,7 @@ import time
 import datetime
 import hashlib
 
+# Front-end is not implemented to this login page code 
 
 class Create_User:
 
