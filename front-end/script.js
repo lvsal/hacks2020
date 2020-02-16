@@ -103,49 +103,61 @@ class allFacilities {
 // draw each color one at a time/determining what color needs to be drawn
 function drawMap(facilities){
   // Student facilities
-  facilities.studentFacilities.forEach(function (arrayItem) {
-    L.polygon(
-      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
-      {color: 'green'}
-    ).addTo(map).bindTooltip(arrayItem.description,
-      {direction:"center"}
-    ).bindPopup(arrayItem.description);
-  });
+  if (showFacility[0] == 0) {
+    facilities.studentFacilities.forEach(function (arrayItem) {
+      L.polygon(
+        [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+        {color: 'green'}
+      ).addTo(map).bindTooltip(arrayItem.description,
+        {direction:"center"}
+      ).bindPopup(arrayItem.description);
+    });
+  }
+  else {
+    console.log('xd');
+  }
 
   // Stores
-  facilities.stores.forEach(function (arrayItem) {
-    L.polygon(
-      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
-      {color: 'blue'}
-    ).addTo(map).bindTooltip(arrayItem.name,
-      {direction:"center"}
-    ).bindPopup(arrayItem.description);
-  });
+  if (showFacility[1] == 0) {
+    facilities.stores.forEach(function (arrayItem) {
+      L.polygon(
+        [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+        {color: 'blue'}
+      ).addTo(map).bindTooltip(arrayItem.name,
+        {direction:"center"}
+      ).bindPopup(arrayItem.description);
+    });
+  }
 
   // Self facilities
-  facilities.selfFacilities.forEach(function (arrayItem) {
-    L.polygon(
-      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
-      {color: 'red'}
-    ).addTo(map).bindTooltip(arrayItem.name,
-      {direction:"center"}
-    ).bindPopup(arrayItem.description);
-  });
+  if (showFacility[2]==0) {
+    facilities.selfFacilities.forEach(function (arrayItem) {
+      L.polygon(
+        [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+        {color: 'red'}
+      ).addTo(map).bindTooltip(arrayItem.name,
+        {direction:"center"}
+      ).bindPopup(arrayItem.description);
+    });
+  }
 
   // Uni facilities
-  facilities.uniFacilities.forEach(function (arrayItem) {
-    L.polygon(
-      [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
-      {color: 'orange'}
-    ).addTo(map).bindTooltip(arrayItem.name,
-      {direction:"center"}
-    ).bindPopup(arrayItem.description);
-  });
+  if (showFacility[3]==0) {
+    facilities.uniFacilities.forEach(function (arrayItem) {
+      L.polygon(
+        [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
+        {color: 'orange'}
+      ).addTo(map).bindTooltip(arrayItem.name,
+        {direction:"center"}
+      ).bindPopup(arrayItem.description);
+    });
+  }
+
 }
 
 // Main
 
-let = showFacility = [0, 0, 0, 0, 0];
+let showFacility = [1, 1, 1, 1];
 
 let test = new allFacilities();
 
@@ -156,6 +168,49 @@ test.addFacility("stor", "stores", "msc", "2", "278", [524,395],	[524,463],	[442
 test.addFacility("lse", "studentFacilities", "msc", "2", "293", [642,635],	[642,823], [574,627],	[574,826], "10:00 am - 5:00 pm", "the leadership and student engagement office");
 
 drawMap(test);
+
+$('#studentFacilities').click(function() {
+    if($(this).is(":checked")) {
+            showFacility[0] = 0;
+            drawMap(test);
+        } else {
+            showFacility[0] = 1;
+            drawMap(test);
+        }
+});
+
+$('#stores').click(function() {
+    if($(this).is(":checked")) {
+            showFacility[1] = 0;
+            drawMap(test);
+
+        } else {
+            showFacility[1] = 1;
+            drawMap(test);
+        }
+});
+
+$('#personalFacilities').click(function() {
+    if($(this).is(":checked")) {
+            showFacility[2] = 0;
+            drawMap(test);
+
+        } else {
+            showFacility[2] = 1;
+            drawMap(test);
+        }
+});
+
+$('#uniFacilities').click(function() {
+    if($(this).is(":checked")) {
+            showFacility[3] = 0;
+            drawMap(test);
+
+        } else {
+            showFacility[3] = 1;
+            drawMap(test);
+        }
+});
 
 //
 //
