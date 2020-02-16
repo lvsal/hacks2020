@@ -38,22 +38,38 @@ def fetch_comments():
         return jsonify(message)  # serialize and use JSON headers
 
 
-@app.route('/create_post', methods=['GET', 'POST'])
-def update_post():
+@app.route('/create_post', methods = ['POST'])
+def create_post():
+    global err
+    global logged_in
+    jsdata = request.form['javascript_data']
+    js = json.loads(jsdata)
+    status = dm.update_query('create_post', [js["coord_x"], js["coord_y"], js["comments"], js["rating"],  js["username"]])
+    if not status:
+        return "Failed to create post"
+    return ""
 
-    # POST request
-    data = dm.update_query('create_post', args=[])
-    # lol = json.(data)
-    # dumps
-    if request.method == 'POST':
-        print('Incoming..')
-        print(request.get_json())  # parse as JSON
-        return data, 200
+@app.route('/upvote_post', methods = ['POST'])
+def upvote_post():
+    global err
+    global logged_in
+    jsdata = request.form['javascript_data']
+    js = json.loads(jsdata)
+    status = dm.update_query('upvote_post', [js["postid"]])
+    if not status:
+        return "Failed to create post"
+    return ""
 
-    # GET request
-    else:
-        message = {'greeting':'Hello from Flask!'}
-        return jsonify(message)  # serialize and use JSON headers
+@app.route('/downvote_post', methods = ['POST'])
+def downvote_post():
+    global err
+    global logged_in
+    jsdata = request.form['javascript_data']
+    js = json.loads(jsdata)
+    status = dm.update_query('downvote_post', [js["postid"]])
+    if not status:
+        return "Failed to create post"
+    return ""
 
 
 @app.route('/')

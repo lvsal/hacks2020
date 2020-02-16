@@ -210,13 +210,13 @@ function clearComments(){
 function drawComment(allComments){
   allComments.comments.forEach(function (commentItem){
 
-      var commentsPopup = '<form id="commentForm">' +
-      '<button type="button" id="upvote">Upvote</button>' +
-      '</form>';
+      // var commentsPopup = '<form id="commentForm">' +
+      // '<button type="button" id="upvote">Upvote</button>' +
+      // '</form>';
 
-      let newComment = L.marker(L.latLng([commentItem.coordY,commentItem.coordY]))
+      let newComment = L.marker(L.latLng([commentItem.coordX,commentItem.coordY]))
       .bindTooltip(commentItem.username + ": " + commentItem.comments)
-      .bindPopup(commentsPopup)
+      .bindPopup("Rank: " + commentItem.rating)
       .addTo(map);
 
       commentList.push(newComment);
@@ -303,9 +303,21 @@ function onMapClick(e) {
     let commentForm = document.getElementById('comment').value;
     if (commentForm != ""){
       // update database here
-      console.log(commentForm);
+      let comment = commentForm;
+      let lat = coordinates["lat"];
+      let lng = coordinates["lng"];
+      let rating = 1;
+      let username = "sandesh";
+
+      create_posts(lat, lng, comment, rating, username);
+
+      L.marker(L.latLng([ lat,lng ]))
+      .bindTooltip(username + ": " + comment)
+      .addTo(map);
+
     }
     map.closePopup();
+
   });
 
 }
@@ -331,8 +343,8 @@ drawMap(test);
 
 map.on('click', onMapClick);
 
-// drawComment(commenttest);
-// clearComments();
+drawComment(commenttest);
+clearComments();
 
 //
 //
