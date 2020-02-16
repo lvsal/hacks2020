@@ -117,12 +117,12 @@ function parseThrough_Comments(obj){
             javascript_data: JSON.stringify(userinfo)
         });
 
-        sleep(1500).then(() => {
-            sleep(500).then(() => {
-              window.location.reload();
-              //button.parentNode.removeC
-            });
-        });
+        // sleep(1500).then(() => {
+        //     sleep(500).then(() => {
+        //       window.location.reload();
+        //       //button.parentNode.removeC
+        //     });
+        // });
         //setTimeout(window.location.reload(),2000);
         //button.parentNode.removeChild(button);
 
