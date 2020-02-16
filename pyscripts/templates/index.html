@@ -1,99 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>Login V3</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/favicon.ico')}}/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
 </head>
 <body>
-    jfbefb
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('/static/images/bg-01.jpg');">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form">
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Log in
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" id="user" name="username" placeholder="Username">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" id="passwrd" name="pass" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+	
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
 </body>
 </html>
-
-<script>
-
-
-    let succ = false;
-    let succ_create = false;
-    let err = "";
-    let err_create = "";
-
-    function info(){
-        fetch('/login_success',{
-            // Specify the method
-            method: 'POST'
-        }).then(function (response) {
-            return response.text();
-        }).then(function (text) {
-            console.log("info text:: " + text);
-            if (text === ""){
-                succ = true;
-            }else{
-                err = text;
-            }
-        });
-    }
-
-    function info_2(){
-        fetch('/create_success',{
-            // Specify the method
-            method: 'POST'
-        }).then(function (response) {
-            return response.text();
-        }).then(function (text) {
-            console.log("info text:: " + text);
-            if (text === ""){
-                succ_create = true;
-            }else{
-                err_create = text;
-            }
-        });
-    }
-
-
-    const sleep = (milliseconds) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
-    };
-
-    function login(username, password){
-        let n = {
-            user: username,
-            pass: password
-        };
-        $.post( "/postmethod", {
-            javascript_data: JSON.stringify(n)
-        });
-        sleep(2000).then(() => {
-          info();
-          sleep(500).then(() => {
-              console.log(succ);
-              console.log(err);
-          });
-        });
-    }
-
-    function create(username, password, mail_add) {
-        var userinfo = {
-            user: username,
-            pass: password,
-            email: mail_add
-        };
-
-        $.post("/createnew", {
-            javascript_data: JSON.stringify(userinfo)
-        });
-
-        sleep(2000).then(() => {
-            info_2();
-            sleep(500).then(() => {
-                console.log(succ_create);
-                console.log(err_create);
-            });
-        });
-    }
-
-    {#login("joey", "1029384756")#}
-    create("John", "111111111111", "bonham@gmail.com");
-    sleep(4000).then(() => {
-        login("liko", "987654321");
-    });
-
-</script>

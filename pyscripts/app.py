@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, render_template, make_response
-app = Flask(__name__)
 import json
 import data_manager as dm
 import Login_Create as login
+app = Flask(__name__)
 
 logged_in = ""
 err_l = ""

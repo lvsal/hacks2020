@@ -16,6 +16,8 @@ class Create_User:
     def __init__(self, email_add, password, username):
         global err
         global success
+        err = ""
+        success = 0
         connection = mysql.connector.connect(host='remotemysql.com',
                                              database='vym2d4siQ9',
                                              user='vym2d4siQ9',
@@ -58,6 +60,8 @@ class Login:
     def __init__(self, user, password):
         global err
         global success
+        err = ""
+        success = 0
         connection = mysql.connector.connect(host='remotemysql.com',
                                              database='vym2d4siQ9',
                                              user='vym2d4siQ9',
