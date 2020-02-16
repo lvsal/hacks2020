@@ -58,11 +58,17 @@
 //     current_row = current_row + 1;
 //   }
 // }
+//
+
+// commenttest.addComment(600, 500, "comment", "rating", "username");
+// clearComments();
+
 
 function parseThrough_Comments(obj){
         // Find a <table> element with id="myTable":
       var table = document.getElementById("comments_table");
       let current_row = 1;
+
 
 
     for (var i = 0; i < obj.length; i++){
@@ -77,6 +83,8 @@ function parseThrough_Comments(obj){
       let comment = comment_allinfo["comments"];
       let rating = comment_allinfo["rating"];
       let username = comment_allinfo["username"];
+
+      commenttest.addComment(parseInt(coord_x), parseInt(coord_y), comment, rating, username);
 
       //console.log(eventname, date, starttime, endtime, location);
       // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
@@ -97,7 +105,8 @@ function parseThrough_Comments(obj){
 
       current_row = current_row + 1;
     }
-
+    clearComments();
+    drawComment(commenttest);
 }
 
 function codeAddress() {

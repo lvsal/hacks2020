@@ -38,6 +38,24 @@ def fetch_comments():
         return jsonify(message)  # serialize and use JSON headers
 
 
+@app.route('/create_post', methods=['GET', 'POST'])
+def update_post():
+
+    # POST request
+    data = dm.update_query('create_post', args=[])
+    # lol = json.(data)
+    # dumps
+    if request.method == 'POST':
+        print('Incoming..')
+        print(request.get_json())  # parse as JSON
+        return data, 200
+
+    # GET request
+    else:
+        message = {'greeting':'Hello from Flask!'}
+        return jsonify(message)  # serialize and use JSON headers
+
+
 @app.route('/')
 def index():
     # look inside `templates` and serve `index.html`
