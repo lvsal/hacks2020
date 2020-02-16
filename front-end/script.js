@@ -39,3 +39,8 @@ function onMapClick(e) {
 }
 
 map.on('click', onMapClick);
+
+var polygon = L.rectangle(
+  [[277, 293],[223, 328]],
+  {color: 'yellow'}
+).addTo(map).bindPopup("test");
