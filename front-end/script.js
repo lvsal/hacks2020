@@ -112,5 +112,5 @@ class allFacilities {
 addFacility("Bake chef","stores", (450,682),	(450,742),	(424,682)	,(424,742), "9:00 am - 5:00 pm",	"Bake chef: viet sub");
 addFacility("coffee shop","stores", (450,753),	(449,792)	,(423,754)	,(423,792),	"9:00 am - 5:30 pm"	, "coffee house: coffee shop");
 addFacility("pharmacy", "stores",	(564,602), (566,673), (498,602), (498,673),	"8:30 am - 6:00 am",	"pharcmy for all your pharmacy needs");
-addFacility("stor", "blue", (524,395),	(524,463),	(442,395),	(442,463),	"7:00 am - 11:00 pm", "the stor has a lot of stuff");
-addFacility("lse", "orange", (642,635),	(642,823), (574,627),	(574,826),	"10:00 am - 5:00 pm",	"the leadership and student engagement office");
+addFacility("stor", "stores", (524,395),	(524,463),	(442,395),	(442,463),	"7:00 am - 11:00 pm", "the stor has a lot of stuff");
+addFacility("lse", "uniFacilities", (642,635),	(642,823), (574,627),	(574,826),	"10:00 am - 5:00 pm",	"the leadership and student engagement office");
