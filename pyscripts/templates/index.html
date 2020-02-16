@@ -1,24 +1,44 @@
 <!DOCTYPE html>
-<html>
-<body>
-    jfbefb
-</body>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Media</title>
+
+    <!-- Bootstrap core CSS -->
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    </head>
+
+  <body id="Projects">
+    <div class="container">
+          <table class="table table-dark" id="main_event_table">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+</div>
+
+  </body>
+<script type="text/javascript" src="{{ url_for('static', filename = 'random.js') }}"></script>
 </html>
-
-<script>
-
-    fetch('/hello',{
-        // Specify the method
-        method: 'POST',
-        // A JSON payload
-        body: JSON.stringify({
-            "greeting": "Hello from the browser!"
-        })
-    }).then(function (response) {
-        return response.json();
-    }).then(function (text) {
-        console.log('POST response: ' + text);
-        // Should be 'OK' if everything was successful
-    });
-
-</script>
