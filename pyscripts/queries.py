@@ -5,7 +5,7 @@ update_events = "INSERT INTO events (eventname, date, starttime, endtime, locati
 fetch_events = "SELECT * FROM events ORDER BY date;"
 fetch_user_events = "SELECT * FROM user_events;"
 fetch_post = "SELECT * FROM posts WHERE coord_x=%s AND coord_y=%s;"
-fetch_all_posts = "SELECT * FROM posts ORDER BY rating;"
+fetch_all_posts = "SELECT * FROM posts ORDER BY rating DESC;"
 fetch_location_name = "SELECT * FROM location WHERE coord_x=%s AND coord_y=%s;"
 create_post = "INSERT INTO posts(coord_x, coord_y, comments, rating, username) VALUES(%s, %s, %s, %s, %s);"
 upvote_post = "UPDATE posts SET rating = rating + 1 WHERE postid=%s;"

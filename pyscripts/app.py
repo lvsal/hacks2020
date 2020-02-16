@@ -20,6 +20,23 @@ def hello():
         message = {'greeting':'Hello from Flask!'}
         return jsonify(message)  # serialize and use JSON headers
 
+@app.route('/fetch_comments', methods=['GET', 'POST'])
+def fetch_comments():
+
+    # POST request
+    data = dm.fetch_query("fetch_all_posts")
+    # lol = json.(data)
+    # dumps
+    if request.method == 'POST':
+        print('Incoming..')
+        print(request.get_json())  # parse as JSON
+        return data, 200
+
+    # GET request
+    else:
+        message = {'greeting':'Hello from Flask!'}
+        return jsonify(message)  # serialize and use JSON headers
+
 
 @app.route('/')
 def index():
