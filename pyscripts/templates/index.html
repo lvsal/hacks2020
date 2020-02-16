@@ -11,27 +11,10 @@
 <script>
 
 
-
     let succ = false;
+    let succ_create = false;
     let err = "";
-
-    fetch('/hello',{
-        // Specify the method
-        method: 'POST'
-    }).then(function (response) {
-        return response.json();
-    }).then(function (text) {
-        console.log('POST response: ' + text);
-    });
-
-    function firstFunction(n){
-        // do some asynchronous work
-        // and when the asynchronous stuff is complete
-        $.post( "/postmethod", {
-
-            javascript_data: JSON.stringify(n)
-        });
-    }
+    let err_create = "";
 
     function info(){
         fetch('/login_success',{
@@ -40,10 +23,27 @@
         }).then(function (response) {
             return response.text();
         }).then(function (text) {
+            console.log("info text:: " + text);
             if (text === ""){
                 succ = true;
             }else{
                 err = text;
+            }
+        });
+    }
+
+    function info_2(){
+        fetch('/create_success',{
+            // Specify the method
+            method: 'POST'
+        }).then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            console.log("info text:: " + text);
+            if (text === ""){
+                succ_create = true;
+            }else{
+                err_create = text;
             }
         });
     }
@@ -58,8 +58,10 @@
             user: username,
             pass: password
         };
-        firstFunction(n);
-        sleep(1000).then(() => {
+        $.post( "/postmethod", {
+            javascript_data: JSON.stringify(n)
+        });
+        sleep(2000).then(() => {
           info();
           sleep(500).then(() => {
               console.log(succ);
@@ -79,17 +81,19 @@
             javascript_data: JSON.stringify(userinfo)
         });
 
-        sleep(1000).then(() => {
-            info();
+        sleep(2000).then(() => {
+            info_2();
             sleep(500).then(() => {
-                console.log(succ);
-                console.log(err);
+                console.log(succ_create);
+                console.log(err_create);
             });
         });
     }
 
-    create("joey", "1029384756", "joey.ngo@gmail.com");
-    {#err = "";#}
-    login("liko", "987654321");
+    {#login("joey", "1029384756")#}
+    create("John", "111111111111", "bonham@gmail.com");
+    sleep(4000).then(() => {
+        login("liko", "987654321");
+    });
 
 </script>
