@@ -20,6 +20,17 @@ map.on('drag', function() {
 map.setView( [350, 545], 0);
 
 // Classes
+// Map Comment Class
+class mapComment {
+  constructor(coordX, coordY, comments, rating, username){
+    this.coordX = coordX;
+    this.coordY = coordY;
+    this.comments = comments;
+    this.rating = rating;
+    this.username = username;
+  }
+};
+
 // location types
 class mapArea {
   constructor(cornerTL, cornerTR, cornerBL, cornerBR){
@@ -99,82 +110,100 @@ class allFacilities {
   }
 }
 
+class allComments {
+  constructor(){
+    this.comments = [];
+  }
+
+  addComment(coordX, coordY, comments, rating, username){
+    let newComment = new mapComment(coordX, coordY, comments, rating, username);
+    this.comments.push(newComment);
+  }
+}
+
 // Map Functions
+let polygonList = [];
+
 // draw each color one at a time/determining what color needs to be drawn
 function drawMap(facilities){
   // Student facilities
   if (showFacility[0] == 0) {
     facilities.studentFacilities.forEach(function (arrayItem) {
-      L.polygon(
+      let newPolygon = L.polygon(
         [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
         {color: 'green'}
       ).addTo(map).bindTooltip(arrayItem.description,
         {direction:"center"}
       ).bindPopup(arrayItem.description);
+      polygonList.push(newPolygon);
     });
-  }
-  else {
-    console.log('xd');
+
   }
 
   // Stores
   if (showFacility[1] == 0) {
     facilities.stores.forEach(function (arrayItem) {
-      L.polygon(
+      let newPolygon = L.polygon(
         [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
         {color: 'blue'}
       ).addTo(map).bindTooltip(arrayItem.name,
         {direction:"center"}
       ).bindPopup(arrayItem.description);
+      polygonList.push(newPolygon);
     });
   }
 
   // Self facilities
   if (showFacility[2]==0) {
     facilities.selfFacilities.forEach(function (arrayItem) {
-      L.polygon(
+      let newPolygon = L.polygon(
         [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
         {color: 'red'}
       ).addTo(map).bindTooltip(arrayItem.name,
         {direction:"center"}
       ).bindPopup(arrayItem.description);
+      polygonList.push(newPolygon);
     });
   }
 
   // Uni facilities
   if (showFacility[3]==0) {
     facilities.uniFacilities.forEach(function (arrayItem) {
-      L.polygon(
+      let newPolygon = L.polygon(
         [arrayItem.cornerTL,arrayItem.cornerTR,arrayItem.cornerBR,arrayItem.cornerBL],
         {color: 'orange'}
       ).addTo(map).bindTooltip(arrayItem.name,
         {direction:"center"}
       ).bindPopup(arrayItem.description);
+      polygonList.push(newPolygon);
     });
   }
-
 }
 
-// Main
+// Clear map of all polygons
+function clearMap(){
+  polygonList.forEach(function (polyItem){
+    map.removeLayer(polyItem);
+  });
+}
 
-let showFacility = [1, 1, 1, 1];
+function drawComment(allComments){
+  allComments.comments.forEach(function (commentItem){
+      let newComment = L.marker(L.latLng([commentItem.coordY,commentItem.coordY]))
+      .bindTooltip(commentItem.username + ": " + commentItem.comments)
+      .addTo(map);
+  });
+}
 
-let test = new allFacilities();
-
-test.addFacility("Bake chef","stores", "Mac", "6166", "267", [450,682],	[450,742],	[424,682]	,[424,742], "9:00 am - 5:00 pm",	"viet sub");
-test.addFacility("coffee shop",	"uniFacilities",	"msc",	"2","296",	[450,753], [449,792],	[423,754],	[423,792],	"9:00 am - 5:30 pm",	"coffee shop");
-test.addFacility("pharmacy", "selfFacilities", "msc", "2", "291", [564,602], [566,673], [498,602],	[498,673], "8:30 am - 6:00 am", "pharcmy for all your pharmacy needs");
-test.addFacility("stor", "stores", "msc", "2", "278", [524,395],	[524,463],	[442,395], [442,463],	"7:00 am - 11:00 pm",	"the stor has a lot of stuff");
-test.addFacility("lse", "studentFacilities", "msc", "2", "293", [642,635],	[642,823], [574,627],	[574,826], "10:00 am - 5:00 pm", "the leadership and student engagement office");
-
-drawMap(test);
-
+// Hide/Show facilities
 $('#studentFacilities').click(function() {
     if($(this).is(":checked")) {
             showFacility[0] = 0;
+            clearMap();
             drawMap(test);
         } else {
             showFacility[0] = 1;
+            clearMap();
             drawMap(test);
         }
 });
@@ -182,10 +211,12 @@ $('#studentFacilities').click(function() {
 $('#stores').click(function() {
     if($(this).is(":checked")) {
             showFacility[1] = 0;
+            clearMap();
             drawMap(test);
 
         } else {
             showFacility[1] = 1;
+            clearMap();
             drawMap(test);
         }
 });
@@ -193,10 +224,12 @@ $('#stores').click(function() {
 $('#personalFacilities').click(function() {
     if($(this).is(":checked")) {
             showFacility[2] = 0;
+            clearMap();
             drawMap(test);
 
         } else {
             showFacility[2] = 1;
+            clearMap();
             drawMap(test);
         }
 });
@@ -204,13 +237,60 @@ $('#personalFacilities').click(function() {
 $('#uniFacilities').click(function() {
     if($(this).is(":checked")) {
             showFacility[3] = 0;
+            clearMap();
             drawMap(test);
 
         } else {
             showFacility[3] = 1;
+            clearMap();
             drawMap(test);
         }
 });
+
+
+// Popup Comment
+var commentHTML = '<form id="commentForm">' +
+  '<label for="comment">Comment:</label><br>' +
+  '<input type="text" id="comment" name="comment"><br>' +
+  '<button type="button" id="commentSubmit">Submit</button>' +
+  '</form>';
+
+function onMapClick(e) {
+  let coordinates = e.latlng;
+  var commentPopup = L.popup()
+  .setLatLng(coordinates)
+  .setContent(commentHTML)
+  .openOn(map);
+
+  var commentSubmit = L.DomUtil.get('commentSubmit');
+  L.DomEvent.addListener(commentSubmit, 'click', function (e) {
+    let commentForm = document.getElementById('comment').value;
+    if (commentForm != ""){
+      // update database here
+      console.log(commentForm);
+    }
+    map.closePopup();
+  });
+
+}
+
+// Main
+let showFacility = [1, 1, 1, 1];
+
+let test = new allFacilities();
+let commenttest = new allComments();
+
+test.addFacility("Bake chef","stores", "Mac", "6166", "267", [450,682],	[450,742],	[424,682]	,[424,742], "9:00 am - 5:00 pm",	"viet sub");
+test.addFacility("coffee shop",	"uniFacilities",	"msc",	"2","296",	[450,753], [449,792],	[423,754],	[423,792],	"9:00 am - 5:30 pm",	"coffee shop");
+test.addFacility("pharmacy", "selfFacilities", "msc", "2", "291", [564,602], [566,673], [498,602],	[498,673], "8:30 am - 6:00 am", "pharcmy for all your pharmacy needs");
+test.addFacility("stor", "stores", "msc", "2", "278", [524,395],	[524,463],	[442,395], [442,463],	"7:00 am - 11:00 pm",	"the stor has a lot of stuff");
+test.addFacility("lse", "studentFacilities", "msc", "2", "293", [642,635],	[642,823], [574,627],	[574,826], "10:00 am - 5:00 pm", "the leadership and student engagement office");
+
+commenttest.addComment(500, 500, "this place is cool", "2", "username");
+
+drawMap(test);
+drawComment(commenttest);
+map.on('click', onMapClick);
 
 //
 //
@@ -226,7 +306,11 @@ $('#uniFacilities').click(function() {
 // Line
 // var travel = L.polyline([sol, test1]).addTo(map);
 
-
+// Polygon test
+// var polygon = L.rectangle(
+//   [[277, 293],[223, 328]],
+//   {color: 'yellow'}
+// ).addTo(map).bindPopup("test");
 
 // Long/Lat popup
 // var popup = L.popup();
@@ -239,9 +323,3 @@ $('#uniFacilities').click(function() {
 // }
 
 // map.on('click', onMapClick);
-
-// Polygon test
-// var polygon = L.rectangle(
-//   [[277, 293],[223, 328]],
-//   {color: 'yellow'}
-// ).addTo(map).bindPopup("test");
