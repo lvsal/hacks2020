@@ -31,6 +31,16 @@ def login_success():
         return err, 200
 
 
+@app.route('/create_success', methods=['POST'])
+def create_success():
+    # lol = json.(data)
+    # dumps
+    global err
+    if request.method == 'POST':
+        print(err)
+        return err, 200
+
+
 
 @app.route('/postmethod', methods = ['POST'])
 def get_post_javascript_data():
@@ -38,7 +48,6 @@ def get_post_javascript_data():
     global err
     jsdata = request.form['javascript_data']
     js = json.loads(jsdata)
-    print(request.get_json())
     details = get_login(js)
     err = details[1]
     if(details[0] == 1):
@@ -47,6 +56,18 @@ def get_post_javascript_data():
     else:
         logged_in = ""
         return logged_in
+
+
+@app.route('/createnew', methods = ['POST'])
+def create_Account():
+    global err
+    global logged_in
+    jsdata = request.form['javascript_data']
+    js = json.loads(jsdata)
+    login.Create_User(js["email"], js["pass"], js["user"])
+    hey = login.get_success()
+    err = hey[1]
+    return err
 
 
 def get_login(js):

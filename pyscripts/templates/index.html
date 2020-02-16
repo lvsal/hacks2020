@@ -10,10 +10,7 @@
 
 <script>
 
-    let n = {
-        user: "shankar",
-        pass: "1234567891"
-    };
+
 
     let succ = false;
     let err = "";
@@ -25,12 +22,9 @@
         return response.json();
     }).then(function (text) {
         console.log('POST response: ' + text);
-        {#n = text;#}
-        console.log(JSON.stringify(n))
-        // Should be 'OK' if everything was successful
     });
 
-    function firstFunction(_callback){
+    function firstFunction(n){
         // do some asynchronous work
         // and when the asynchronous stuff is complete
         $.post( "/postmethod", {
@@ -55,19 +49,47 @@
     }
 
 
-
     const sleep = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     };
 
-    firstFunction();
-    sleep(1000).then(() => {
-      info();
-      sleep(500).then(() => {
-          console.log(succ);
-          console.log(err);
-      });
-    });
+    function login(username, password){
+        let n = {
+            user: username,
+            pass: password
+        };
+        firstFunction(n);
+        sleep(1000).then(() => {
+          info();
+          sleep(500).then(() => {
+              console.log(succ);
+              console.log(err);
+          });
+        });
+    }
 
+    function create(username, password, mail_add) {
+        var userinfo = {
+            user: username,
+            pass: password,
+            email: mail_add
+        };
+
+        $.post("/createnew", {
+            javascript_data: JSON.stringify(userinfo)
+        });
+
+        sleep(1000).then(() => {
+            info();
+            sleep(500).then(() => {
+                console.log(succ);
+                console.log(err);
+            });
+        });
+    }
+
+    create("joey", "1029384756", "joey.ngo@gmail.com");
+    {#err = "";#}
+    login("liko", "987654321");
 
 </script>
