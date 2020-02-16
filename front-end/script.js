@@ -1,11 +1,11 @@
 var map = L.map('mapid', {
   crs: L.CRS.Simple,
-  minZoom: -1,
+  minZoom: -.5,
   maxZoom: 3
 });
 
 // Map Picture Overlay
-var bounds = [[0,0], [633,1090]];
+var bounds = [[0,0], [700,1090]];
 var image = L.imageOverlay('machall1.png', bounds).addTo(map);
 
 // Enforce bounds
@@ -29,18 +29,58 @@ L.marker(sol).addTo(map);
 // map.setView( [600, 500], 1);
 
 // Long/Lat popup
-var popup = L.popup();
+// var popup = L.popup();
+//
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("You clicked the map at " + e.latlng.toString())
+//         .openOn(map);
+// }
 
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(map);
-}
+// map.on('click', onMapClick);
 
-map.on('click', onMapClick);
-
+// Polygon test
 var polygon = L.rectangle(
   [[277, 293],[223, 328]],
   {color: 'yellow'}
 ).addTo(map).bindPopup("test");
+
+//
+//
+
+//
+class mapArea {
+  constructor(name, identifier, cornerTL, cornerTR, cornerBL, cornerBR){
+    this.name = name;
+    this.identifier = identifier;
+    this.cornerTL = cornerTL;
+    this.cornerTR = cornerTR;
+    this.cornerBL = cornerBL;
+    this.cornerBR = cornerBR;
+  }
+};
+
+class mapFacility extends mapArea {
+  constructor(name, identifier, cornerTL, cornerTR, cornerBL, cornerBR,
+              hours, description){
+    super(name, identifier, cornerTL, cornerTR, cornerBL, cornerBR);
+    this.hours = hours;
+    this.description = description;
+  }
+};
+
+class allFacilities {
+  constructor(){
+    this.studentFacilities = [];
+    this.stores = [];
+    this.selfFacilities = [];
+    this.uniFacilities = [];
+    this.events = [];
+  }
+
+  // create an mapFacility obj and pushes it into the corresponding array
+  addStudentFacility() {
+
+  }
+}
