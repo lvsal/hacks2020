@@ -16,8 +16,8 @@ map.on('drag', function() {
 });
 
 // Pins test (Y, X);
-var sol = L.latLng([ 370,602 ]);
-L.marker(sol).addTo(map);
+// var sol = L.latLng([ 370,602 ]);
+// L.marker(sol).addTo(map);
 
 // Pin with popup
 // var test1 = L.latLng([ 250,600 ]);
@@ -92,36 +92,33 @@ class allFacilities {
   addFacility(name, identifier, building, floor, room, cornerTL, cornerTR,
     cornerBL, cornerBR, hours, description) {
 
-      let newFacility = mapFacility(name, identifier, building, floor, room,
+      let newFacility = new mapFacility(name, identifier, building, floor, room,
         cornerTL, cornerTR, cornerBL, cornerBR, hours, description);
       if (identifier === "studentFacilities" ){
-        studentFacilities.push(newFacility);
+        this.studentFacilities.push(newFacility);
       }
       else if (identifier === "stores"){
-        stores.push(newFacility);
+        this.stores.push(newFacility);
       }
       else if (identifier === "selfFacilities"){
-        selfFacilities.push(newFacility);
+        this.selfFacilities.push(newFacility);
       }
       else if (identifier === "uniFacilities"){
-        uniFacilities.push(newFacility);
+        this.uniFacilities.push(newFacility);
       }
   }
 }
-let test = allFacilities();
+let test = new allFacilities();
 
 // draw each color one at a time/determining what color needs to be drawn
-function drawmap(vars){
-  for (var i = 0; i < array.length; i++) {
-    // draw here
-    // update whatever needs to be updated.
-  }
+function drawMap(facilities){
+  facilities.stores.forEach(function (arrayItem) {
+    let hey = arrayItem.cornerTL;
+    console.log(arrayItem.cornerTL);
+    L.marker(L.latLng(hey)).addTo(map).bindPopup("hello");
+  });
 }
 
-// the same hting as above but for hiding colors instaed
+test.addFacility("Bake chef","stores", "Mac", "6166", "267", [450,682],	[450,742],	[424,682]	,[424,742], "9:00 am - 5:00 pm",	"Bake chef: viet sub");
 
-addFacility("Bake chef","stores", (450,682),	(450,742),	(424,682)	,(424,742), "9:00 am - 5:00 pm",	"Bake chef: viet sub");
-addFacility("coffee shop","stores", (450,753),	(449,792)	,(423,754)	,(423,792),	"9:00 am - 5:30 pm"	, "coffee house: coffee shop");
-addFacility("pharmacy", "stores",	(564,602), (566,673), (498,602), (498,673),	"8:30 am - 6:00 am",	"pharcmy for all your pharmacy needs");
-addFacility("stor", "stores", (524,395),	(524,463),	(442,395),	(442,463),	"7:00 am - 11:00 pm", "the stor has a lot of stuff");
-addFacility("lse", "uniFacilities", (642,635),	(642,823), (574,627),	(574,826),	"10:00 am - 5:00 pm",	"the leadership and student engagement office");
+drawMap(test);
