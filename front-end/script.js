@@ -4,18 +4,38 @@ var map = L.map('mapid', {
   maxZoom: 3
 });
 
-var bounds = [[0,0], [700,1000]];
+// Map Picture Overlay
+var bounds = [[0,0], [633,1090]];
 var image = L.imageOverlay('machall1.png', bounds).addTo(map);
-map.fitBounds(bounds);
 
+// Enforce bounds
+map.fitBounds(bounds);
 map.setMaxBounds(bounds);
 map.on('drag', function() {
-    map.panInsideBounds(bounds, { animate: false });
+    map.panInsideBounds(bounds, { animate: true });
 });
 
-var sol = L.latLng([ 145, 175.2 ]);
+// Pins test (Y, X);
+var sol = L.latLng([ 370,602 ]);
 L.marker(sol).addTo(map);
 
-var test1 = L.latLng([ 600, 900 ]);
-L.marker(test1).addTo(map).bindPopup("hello");
+// Pin with popup
+// var test1 = L.latLng([ 250,600 ]);
+// L.marker(test1).addTo(map).bindPopup("hello");
+
+// Line
+// var travel = L.polyline([sol, test1]).addTo(map);
+
 // map.setView( [600, 500], 1);
+
+// Long/Lat popup
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+}
+
+map.on('click', onMapClick);
