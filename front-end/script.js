@@ -108,8 +108,17 @@ class allFacilities {
       }
   }
 }
-
 let test = allFacilities();
+
+// draw each color one at a time/determining what color needs to be drawn
+function drawmap(vars){
+  for (var i = 0; i < array.length; i++) {
+    // draw here
+    // update whatever needs to be updated.
+  }
+}
+
+// the same hting as above but for hiding colors instaed
 
 addFacility("Bake chef","stores", (450,682),	(450,742),	(424,682)	,(424,742), "9:00 am - 5:00 pm",	"Bake chef: viet sub");
 addFacility("coffee shop","stores", (450,753),	(449,792)	,(423,754)	,(423,792),	"9:00 am - 5:30 pm"	, "coffee house: coffee shop");
