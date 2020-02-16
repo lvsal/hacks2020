@@ -76,19 +76,35 @@ class mapFacility extends mapArea {
   }
 };
 
+let = showFacility = [0, 0, 0, 0, 0];
+
 class allFacilities {
   constructor(){
     this.studentFacilities = [];
     this.stores = [];
     this.selfFacilities = [];
     this.uniFacilities = [];
-    this.events = [];
+    // this.events = [];
+
   }
 
   // create an mapFacility obj and pushes it into the corresponding array
   addFacility(name, identifier, building, floor, room, cornerTL, cornerTR,
     cornerBL, cornerBR, hours, description) {
 
-      if (identifier === "[]" )
+      let newFacility = mapFacility(name, identifier, building, floor, room,
+        cornerTL, cornerTR, cornerBL, cornerBR, hours, description);
+      if (identifier === "studentFacilities" ){
+        studentFacilities.push(newFacility);
+      }
+      else if (identifier === "stores"){
+        stores.push(newFacility);
+      }
+      else if (identifier === "selfFacilities"){
+        selfFacilities.push(newFacility);
+      }
+      else if (identifier === "uniFacilities"){
+        uniFacilities.push(newFacility);
+      }
   }
 }
