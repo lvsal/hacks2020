@@ -71,6 +71,25 @@ class Login:
                 ps_con.close()
                 connection.close()
 
+
 if __name__ == "__main__":
-    sys = Login("shankar", "123456789")
-    print("yay")
+    connection = mysql.connector.connect(host='remotemysql.com',
+                                         database='vym2d4siQ9',
+                                         user='vym2d4siQ9',
+                                         password='o85cLdQ8HE')
+
+    ps_con = connection.cursor(buffered=True)
+    # sys = Login("shankar", "123456789")
+    t = "events"
+    query = """SELECT * FROM `%s`""" % (t)
+    try:
+        ps_con.execute(query)
+        connection.commit()
+        data_hash = ps_con.fetchall()
+        print(data_hash)
+    except mysql.connector.Error as error:
+        print("parameterized query failed {}".format(error))
+    finally:
+        if connection.is_connected():
+            ps_con.close()
+            connection.close()

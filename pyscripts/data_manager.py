@@ -104,22 +104,22 @@ def fetch_query(query_name, args=[],size=None):
     for result in data:
         json_data.append(dict(zip(column_names, [str(r) for r in result])))
     json_string = json.dumps(json_data)
-    return json.loads(json_string) 
+    return json_string
 
 db = db_connect()
 #cursor = prepared_cursor()
 
-def main():
-    """
-    data = scp.getData()
-    if not update_query('update_events', data, True):
-        print("Failed to update query")
-    """
-    json_data = fetch_query('fetch_events')
-    if json_data != False:
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(json_data)
+# def main():
+#     """
+#     data = scp.getData()
+#     if not update_query('update_events', data, True):
+#         print("Failed to update query")
+#     """
+#     json_data = fetch_query('fetch_events')
+#     if json_data != False:
+#         pp = pprint.PrettyPrinter(indent=4)
+#         pp.pprint(json_data)
     
 
-if __name__== "__main__":
-    main()
+# if __name__== "__main__":
+#     main()
